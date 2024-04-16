@@ -87,7 +87,7 @@ const App = () => {
           console.log(`deleted person with id ${id}`)   
           console.log(res)       
           setPersons(persons.filter(p => p.id !== id))
-          handleMessage(`${res.data.name} was deleted`)
+          handleMessage(`${name} was deleted`)
         })
         .catch(err => {
           setError(true);
