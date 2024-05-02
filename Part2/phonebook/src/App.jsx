@@ -35,9 +35,10 @@ const App = () => {
             setNewNumber(''); 
             handleMessage(`changed contact info of ${res.data.name}`)
           })
-          .catch(err => {            
+          .catch(err => {   
+            console.log('Index Erorr: ',err);         
             setError(true);
-            handleMessage(`${changedPerson.name} has already been remoted from server`)
+            handleMessage(err.response.data.error)
           })
       }      
     }else{
@@ -54,8 +55,9 @@ const App = () => {
           handleMessage(`${res.data.name} was added to phonebook`)       
         })   
         .catch(err => {
+          console.log(err.response.data.error);
           setError(true);
-          handleMessage(`${newPerson.name} could not be added to phonebook`)
+          handleMessage(`${newPerson.name} could not be added to phonebook. ${err.response.data.error}`)
         })  
     }    
   }
@@ -101,7 +103,7 @@ const App = () => {
     setTimeout(() => {
       setMessage(null);
       setError(false)
-    }, 5000)
+    }, 7000)
   }
    
   return (

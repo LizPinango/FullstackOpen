@@ -53,15 +53,9 @@ app.delete('/api/persons/:id', (req, res, next) => {
     .catch(error => next(error))
 })
 
-app.post('/api/persons', (req, res) => {//Conecta con la DB
+app.post('/api/persons', (req, res, next) => {//Conecta con la DB
   const body = req.body;
   
-  if (!body.name) {
-    return res.status(400).json({ 
-      error: 'name missing' 
-    })
-  }
-
   if (!body.number) {
     return res.status(400).json({ 
       error: 'number missing' 
@@ -73,9 +67,11 @@ app.post('/api/persons', (req, res) => {//Conecta con la DB
     number: body.number,
   });
 
-  person.save().then((savedPerson) => {
-    res.json(savedPerson);
-  });
+  person.save()
+    .then((savedPerson) => {
+      res.json(savedPerson);
+    })
+    .catch(error => next(error))
 })
 
 //Conecta con la DB - Error Handler
@@ -87,20 +83,32 @@ app.put('/api/persons/:id', (req, res, next) => {
     number: body.number,
   };
 
-  Person.findByIdAndUpdate(req.params.id, person, {new: true})
-    .then(updatedPerson => {
-      res.json(updatedPerson)
-    })
-    .catch(error => next(error))
+  Person.findByIdAndUpdate(req.params.id, person, {new: true, runValidators: true, context: 'query' })
+    .then(updatedPerson => {      
+      if(!updatedPerson){
+        res.status(400).send({ error: 'The Person has been eliminated of the phonebook' })
+      }else{
+        res.json(updatedPerson)
+      }
+    })   
+    .catch(error => next(error)) 
 })
+/*NOTE: findByIdAndUpdate returns null if the id doesn't exist in the DB
+it does NOT return an error, therefor catch(error => next(error)) doesn't work and in this cases creates an error whith the frontend 
+thats why i verified that what the function returns is not null and in cases is it i just send a code 400 
+DO NOT eliminate the .catch because it is needed for the validation*/
 
 //Error Handler Middleware 
 const errorHandler = (error, req, res, next) => {
+  console.log('ErrorHandler: ', error.message);
   console.error(error.message);
 
   if (error.name === 'CastError') {
     return res.status(400).send({ error: 'malformatted id' })
   } 
+  if (error.name === 'ValidationError') {
+    return res.status(400).json({ error: error.message })
+  }
 
   next(error)
 }
