@@ -19,20 +19,20 @@ app.use(morgan((tokens, req, res) => [
   JSON.stringify(req.body),
 ].join(' ')));
 
-app.get('/info', (req, res) => {//Conecta con la DB
+app.get('/info', (req, res) => {
   const date = new Date();
   Person.find({}).then((persons) => {
     res.send(`<p>Phonebook has info for ${persons.length} people</p><p>${date}</p>`);
   });  
 })
 
-app.get('/api/persons', (req, res) => { //conecta con la BD 
+app.get('/api/persons', (req, res) => { 
   Person.find({}).then(persons => {
     res.json(persons)
   })
 })
 
-app.get('/api/persons/:id', (req, res, next) => {//Conecta con la DB  
+app.get('/api/persons/:id', (req, res, next) => {  
   Person.findById(req.params.id)
     .then(person => {
       if (person) {
@@ -44,7 +44,6 @@ app.get('/api/persons/:id', (req, res, next) => {//Conecta con la DB
     .catch(error => next(error))
 })
 
-//Conecta con la DB - Error Handler 
 app.delete('/api/persons/:id', (req, res, next) => {
   Person.findByIdAndDelete(req.params.id)
     .then(result => {
@@ -53,7 +52,7 @@ app.delete('/api/persons/:id', (req, res, next) => {
     .catch(error => next(error))
 })
 
-app.post('/api/persons', (req, res, next) => {//Conecta con la DB
+app.post('/api/persons', (req, res, next) => {
   const body = req.body;
   
   if (!body.number) {
@@ -74,7 +73,6 @@ app.post('/api/persons', (req, res, next) => {//Conecta con la DB
     .catch(error => next(error))
 })
 
-//Conecta con la DB - Error Handler
 app.put('/api/persons/:id', (req, res, next) => {
   const body = req.body;
 
@@ -96,11 +94,10 @@ app.put('/api/persons/:id', (req, res, next) => {
 /*NOTE: findByIdAndUpdate returns null if the id doesn't exist in the DB
 it does NOT return an error, therefor catch(error => next(error)) doesn't work and in this cases creates an error whith the frontend 
 thats why i verified that what the function returns is not null and in cases is it i just send a code 400 
-DO NOT eliminate the .catch because it is needed for the validation*/
+DO NOT eliminate the .catch because it is needed for the mongoDB validation*/
 
 //Error Handler Middleware 
-const errorHandler = (error, req, res, next) => {
-  console.log('ErrorHandler: ', error.message);
+const errorHandler = (error, req, res, next) => {  
   console.error(error.message);
 
   if (error.name === 'CastError') {

@@ -36,7 +36,7 @@ const App = () => {
             handleMessage(`changed contact info of ${res.data.name}`)
           })
           .catch(err => {   
-            console.log('Index Erorr: ',err);         
+            console.log(err);         
             setError(true);
             handleMessage(err.response.data.error)
           })
