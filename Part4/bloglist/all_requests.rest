@@ -1,0 +1,12 @@
+GET http://localhost:3003/api/blogs
+
+###
+POST http://localhost:3003/api/blogs
+content-type: application/json
+
+{
+  "title": "TWICE Best Gruop",
+  "author": "unknown",
+  "url": "http://TWICE_BEST_GRUOP",
+  "likes": 2
+}
