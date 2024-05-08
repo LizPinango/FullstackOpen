@@ -5,8 +5,8 @@ POST http://localhost:3003/api/blogs
 content-type: application/json
 
 {
-  "title": "Cooking in a dungeon",
-  "author": "Laios123",
-  "url": "http://Cooking_in_a_dungeon.com",
-  "likes": 5
+  "title": "The Blue Lock Project",
+  "author": "Ego-san",
+  "url": "http://The_blue_lock_project.com",
+  "likes": 3
 }
