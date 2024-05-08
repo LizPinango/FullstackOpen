@@ -5,8 +5,8 @@ POST http://localhost:3003/api/blogs
 content-type: application/json
 
 {
-  "title": "TWICE Best Gruop",
-  "author": "unknown",
-  "url": "http://TWICE_BEST_GRUOP",
-  "likes": 2
+  "title": "Cooking in a dungeon",
+  "author": "Laios123",
+  "url": "http://Cooking_in_a_dungeon.com",
+  "likes": 5
 }
