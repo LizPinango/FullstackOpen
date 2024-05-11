@@ -5,8 +5,7 @@ POST http://localhost:3003/api/blogs
 content-type: application/json
 
 {
-  "title": "The Blue Lock Project",
-  "author": "Ego-san",
-  "url": "http://The_blue_lock_project.com",
+  "author": "OneLonelyOrbit",
+  "url": "http://TheOrbitofLoona.com",
   "likes": 3
 }
