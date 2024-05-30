@@ -30,14 +30,14 @@ beforeEach(async () => {
   await blogObject.save()
 })
 
-test('notes are returned as json', async () => {
+test.only('blogs are returned as json', async () => {
   await api
     .get('/api/blogs')
     .expect(200)
     .expect('Content-Type', /application\/json/)
 })
 
-test('there are 2 blogs', async () => {
+test.only('there are 2 blogs', async () => {
   const response = await api.get('/api/blogs')
 
   assert.strictEqual(response.body.length, initialBlogs.length)
