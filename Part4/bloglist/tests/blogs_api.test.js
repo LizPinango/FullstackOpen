@@ -39,8 +39,14 @@ test.only('blogs are returned as json', async () => {
 
 test.only('there are 2 blogs', async () => {
   const response = await api.get('/api/blogs')
-
+  
   assert.strictEqual(response.body.length, initialBlogs.length)
+})
+
+test.only('unique identifier property of the blog posts is named id', async () => {
+  const response = await api.get('/api/blogs');
+  
+  assert(Object.keys(response.body[0]).includes('id'))
 })
 
 after(async () => {
