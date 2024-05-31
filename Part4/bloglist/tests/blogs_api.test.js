@@ -36,7 +36,7 @@ test('unique identifier property of the blog posts is named id', async () => {
   assert(Object.keys(response.body[0]).includes('id'))
 })
 
-test.only('a valid blog can be added', async () => {
+test('a valid blog can be added', async () => {
   const newBlog = {
     title: 'new_blog',
     author: 'new_person',
@@ -57,6 +57,57 @@ test.only('a valid blog can be added', async () => {
   assert.strictEqual(response.body.length, helper.initialBlogs.length + 1)
 
   assert(contents.includes('new_blog'))
+})
+
+test('a blog without likes will default to 0', async () => {
+  const newBlog = {
+    title: 'new_blog',
+    author: 'new_person',
+    url: 'https://www.new_blog.com/p?n=4',
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+
+  const response = await api.get('/api/blogs')
+
+  assert.strictEqual(response.body[2].likes, 0)  
+})
+
+test('a blog without tittle is not added ', async () => {
+  const newBlog = {
+    author: 'new_person',
+    url: 'https://www.new_blog.com/p?n=4',
+    likes: 3
+  }
+
+  await api
+  .post('/api/blogs')
+  .send(newBlog)
+  .expect(400)  
+
+  const response = await api.get('/api/blogs')  
+
+  assert.strictEqual(response.body.length, helper.initialBlogs.length)
+})
+
+test('a blog without url is not added ', async () => {
+  const newBlog = {
+    title: 'new_blog',
+    author: 'new_person',    
+    likes: 3
+  }
+
+  await api
+  .post('/api/blogs')
+  .send(newBlog)
+  .expect(400)  
+
+  const response = await api.get('/api/blogs')  
+
+  assert.strictEqual(response.body.length, helper.initialBlogs.length)
 })
 
 after(async () => {
