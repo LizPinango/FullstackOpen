@@ -25,4 +25,23 @@ blogsRouter.delete('/:id', async (request, response, next) => {
   response.status(204).end()
 })
 
+blogsRouter.put('/:id', async (request, response, next) => {
+  const body = request.body
+ 
+  const blog = {
+    title: body.title,
+    author: body.name, 
+    url: body.url,
+    likes: body.likes
+  }
+
+  const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, {new: true})
+    
+  if(!updatedBlog){
+    response.status(404).send({ error: 'The Blog has been eliminated' })
+  }else{
+    response.status(200).json(updatedBlog) 
+  }    
+})
+
 module.exports = blogsRouter;
