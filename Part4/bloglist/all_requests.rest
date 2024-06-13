@@ -5,9 +5,11 @@ POST http://localhost:3003/api/blogs
 content-type: application/json
 
 {
-  "author": "OneLonelyOrbit",
-  "url": "http://TheOrbitofLoona.com",
-  "likes": 3
+  "title": "NewBlog",
+  "author": "Sabrina",
+  "url": "http://New_Blog.com",
+  "likes": 3,
+  "userId": "6669f4cb875f020e77d76792"
 }
 
 ###
@@ -15,7 +17,7 @@ POST http://localhost:3003/api/users
 content-type: application/json
 
 {
-  
+  "username": "NewUser123",
   "name": "Pedro Perez",
   "password": "12345678"
 }
