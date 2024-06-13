@@ -9,3 +9,13 @@ content-type: application/json
   "url": "http://TheOrbitofLoona.com",
   "likes": 3
 }
+
+###
+POST http://localhost:3003/api/users
+content-type: application/json
+
+{
+  
+  "name": "Pedro Perez",
+  "password": "12345678"
+}
