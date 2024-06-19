@@ -7,8 +7,10 @@ const mongoose = require('mongoose')
 const logger = require('./utils/logger'); //the console.logs
 const config = require('./utils/config'); //env variables 
 const middleware = require('./utils/middleware'); // middleware
+
 const blogsRouter = require('./controllers/blogs'); //rutas de los blogs
 const usersRouter = require('./controllers/users'); //rutas de los usuarios
+const loginRouter = require('./controllers/login'); //rutas de login 
 
 mongoose.set('strictQuery', false)
 
@@ -28,6 +30,7 @@ app.use(middleware.requestLogger) // request info
 
 app.use('/api/blogs', blogsRouter)
 app.use('/api/users', usersRouter)
+app.use('/api/login', loginRouter)
 
 app.use(middleware.errorHandler) // Handler errors 
 

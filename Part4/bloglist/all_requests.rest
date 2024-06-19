@@ -3,13 +3,13 @@ GET http://localhost:3003/api/blogs
 ###
 POST http://localhost:3003/api/blogs
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkZpcnN0VXNlciIsImlkIjoiNjY2OWY0Y2I4NzVmMDIwZTc3ZDc2NzkyIiwiaWF0IjoxNzE4ODI3NTczfQ.w81OJX3FT0LGs8KXDeGf9KTwZJ4mR6cDJ0cRgx0VawQ
 
 {
-  "title": "NewBlog",
-  "author": "Sabrina",
-  "url": "http://New_Blog.com",
-  "likes": 3,
-  "userId": "6669f4cb875f020e77d76792"
+  "title": "CoolMusicV2",
+  "author": "17",
+  "url": "http://Cool-Music-V2.com",
+  "likes": 3  
 }
 
 ###
@@ -19,5 +19,14 @@ content-type: application/json
 {
   "username": "NewUser123",
   "name": "Pedro Perez",
+  "password": "12345678"
+}
+
+###
+POST http://localhost:3003/api/login
+content-type: application/json
+
+{
+  "username": "FirstUser",  
   "password": "12345678"
 }
