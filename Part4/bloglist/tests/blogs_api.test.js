@@ -11,13 +11,30 @@ const api = supertest(app)
 const Blog = require('../models/blog')  
 const User = require('../models/user')
 
+beforeEach(async () => { 
+  await User.deleteMany({})
+
+  const passwordHash = await bcrypt.hash('sekret', 10)
+  const user = new User({ username: 'root', passwordHash })
+
+  await user.save()
+})
+
 describe('when there is initially some blogs saved:', () => {
+  let header
+
   beforeEach(async () => {
     await Blog.deleteMany({})
     let blogObject = new Blog(helper.initialBlogs[0])
     await blogObject.save()
     blogObject = new Blog(helper.initialBlogs[1])
     await blogObject.save()
+
+    //LOGIN
+    const login = await api
+      .post('/api/login')
+      .send({'username': 'root', 'password': 'sekret' })
+    header = {'Authorization': `Bearer ${login.body.token}`}
   })
   
   test('blogs are returned as json', async () => {
@@ -33,7 +50,7 @@ describe('when there is initially some blogs saved:', () => {
     assert.strictEqual(response.body.length, helper.initialBlogs.length)
   })
   
-  test('unique identifier property of the blog posts is named id', async () => {
+  test('unique identifier property of the blog post is named id', async () => {
     const response = await api.get('/api/blogs');
     
     assert(Object.keys(response.body[0]).includes('id'))
@@ -46,11 +63,12 @@ describe('when there is initially some blogs saved:', () => {
         author: 'new_person',
         url: 'https://www.new_blog.com/p?n=4',
         likes: 3
-      }
+      }      
     
       await api
         .post('/api/blogs')
         .send(newBlog)
+        .set(header)
         .expect(201)
         .expect('Content-Type', /application\/json/)
     
@@ -73,6 +91,7 @@ describe('when there is initially some blogs saved:', () => {
       await api
         .post('/api/blogs')
         .send(newBlog)
+        .set(header)
         .expect(201)
     
       const response = await api.get('/api/blogs')
@@ -90,6 +109,7 @@ describe('when there is initially some blogs saved:', () => {
       await api
       .post('/api/blogs')
       .send(newBlog)
+      .set(header)
       .expect(400)  
     
       const response = await api.get('/api/blogs')  
@@ -107,7 +127,26 @@ describe('when there is initially some blogs saved:', () => {
       await api
       .post('/api/blogs')
       .send(newBlog)
+      .set(header)
       .expect(400)  
+    
+      const response = await api.get('/api/blogs')  
+    
+      assert.strictEqual(response.body.length, helper.initialBlogs.length)
+    })
+
+    test('fails with status code 401 if a token is not provided', async () => {
+      const newBlog = {
+        title: 'new_blog',
+        author: 'new_person',
+        url: 'https://www.new_blog.com/p?n=4',
+        likes: 3
+      } 
+
+      await api
+      .post('/api/blogs')
+      .send(newBlog)      
+      .expect(401)  
     
       const response = await api.get('/api/blogs')  
     
@@ -117,11 +156,26 @@ describe('when there is initially some blogs saved:', () => {
 
   describe('deletion of a blog:', () => {
     test('succeeds with status code 204 if id is valid', async () => {
-      const blogsAtStart = await helper.blogsInDb()
-      const blogToDelete = blogsAtStart[0]
+      const newBlog = {
+        title: 'new_blog',
+        author: 'new_person',
+        url: 'https://www.new_blog.com/p?n=4',
+        likes: 3
+      }      
     
       await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .set(header)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+    
+      const allBlogs = await helper.blogsInDb()
+      const blogToDelete = allBlogs.find(b => b.title === newBlog.title)        
+
+      await api
         .delete(`/api/blogs/${blogToDelete.id}`)
+        .set(header)
         .expect(204)
     
       const blogsAtEnd = await helper.blogsInDb()
@@ -129,7 +183,7 @@ describe('when there is initially some blogs saved:', () => {
       const titles = blogsAtEnd.map(b => b.title)
       assert(!titles.includes(blogToDelete.title))
     
-      assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length - 1)
+      assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)
     })
   })
 
@@ -197,17 +251,8 @@ describe('when there is initially some blogs saved:', () => {
   })
 })
 
-describe.only('when there is initially one user in db:', () => {
-  beforeEach(async () => {
-    await User.deleteMany({})
-
-    const passwordHash = await bcrypt.hash('sekret', 10)
-    const user = new User({ username: 'root', passwordHash })
-
-    await user.save()
-  })
-
-  test.only('creation succeeds with a fresh username', async () => {
+describe('when there is initially one user in db:', () => {
+  test('creation succeeds with a fresh username', async () => {
     const usersAtStart = await helper.usersInDb()
 
     const newUser = {
@@ -229,7 +274,7 @@ describe.only('when there is initially one user in db:', () => {
     assert(usernames.includes(newUser.username))
   })
 
-  test.only('creation fails with proper statuscode and message if username already taken', async () => {
+  test('creation fails with proper statuscode and message if username already taken', async () => {
     const usersAtStart = await helper.usersInDb()
 
     const newUser = {
@@ -250,7 +295,7 @@ describe.only('when there is initially one user in db:', () => {
     assert.strictEqual(usersAtEnd.length, usersAtStart.length)
   })
 
-  test.only('creation fails with proper statuscode if username is not given', async () => {
+  test('creation fails with proper statuscode if username is not given', async () => {
     const usersAtStart = await helper.usersInDb()
 
     const newUser = {      
@@ -269,7 +314,7 @@ describe.only('when there is initially one user in db:', () => {
     assert.strictEqual(usersAtEnd.length, usersAtStart.length)
   })
 
-  test.only('creation fails with proper statuscode if password is not given', async () => {
+  test('creation fails with proper statuscode if password is not given', async () => {
     const usersAtStart = await helper.usersInDb()
 
     const newUser = {
