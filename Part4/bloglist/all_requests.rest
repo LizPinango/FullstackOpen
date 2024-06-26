@@ -22,7 +22,7 @@ content-type: application/json
 ###
 POST http://localhost:3003/api/blogs
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkZpcnN0VXNlciIsImlkIjoiNjY2OWY0Y2I4NzVmMDIwZTc3ZDc2NzkyIiwiaWF0IjoxNzE5MzIwOTc4fQ.PkCNASbvDMudKbpa4L5Da6ZSUZI6TiLmO4GWltgDyFw
+Authorization: Bearer 
 
 {
   "title": "Blog6",
@@ -33,4 +33,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkZpc
 
 ###
 DELETE http://localhost:3003/api/blogs/667ad13816647555be02529d
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkZpcnN0VXNlciIsImlkIjoiNjY2OWY0Y2I4NzVmMDIwZTc3ZDc2NzkyIiwiaWF0IjoxNzE5MzIwOTc4fQ.PkCNASbvDMudKbpa4L5Da6ZSUZI6TiLmO4GWltgDyFw
+Authorization: Bearer 
