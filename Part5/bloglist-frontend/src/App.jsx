@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -7,11 +8,12 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [user, setUser] = useState(null)  
   const [newTitle, setNewTitle] = useState('')
   const [newAuthor, setNewAuthor] = useState('')
   const [newUrl, setNewUrl] = useState('')
+  const [message, setMessage] = useState(null)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -39,12 +41,11 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
-      window.localStorage.setItem('loggedUser', JSON.stringify(user))
-      console.log('logged in')
-    }catch (exception) {
-      setErrorMessage('Wrong Credentials')
-      console.log(errorMessage)
-      setTimeout(() => {setErrorMessage(null)}, 5000)
+      window.localStorage.setItem('loggedUser', JSON.stringify(user))      
+      handleMessage(`${user.username} logged in`)
+    }catch (err) {        
+      setError(true)
+      handleMessage(`${err.response.data.error}`)
     }
   }
 
@@ -71,7 +72,13 @@ const App = () => {
           setNewTitle('')
           setNewAuthor('')
           setNewUrl('')
-      })
+          handleMessage(`a new blog '${returnedBlog.title}' by ${returnedBlog.author} added`)
+        })
+        .catch(err => {
+          console.log(err);         
+          setError(true);
+          handleMessage(err.response.data.error)
+        })
   }
 
   const handleTitleChange = (event) => {    
@@ -86,10 +93,20 @@ const App = () => {
     setNewUrl(event.target.value);
   }
   
+  const handleMessage = (message) => {
+    setMessage(message)
+    setTimeout(() => {
+      setMessage(null)
+      setError(false)
+    }, 7000)
+  }
+
   if (user === null) {
     return (
       <div>
         <h2>Login</h2>
+        <Notification message={message} error={error}/>
+
         <form onSubmit={handleLogin}>
           <div>
             <label htmlFor='Username'>Username </label>
@@ -111,9 +128,12 @@ const App = () => {
 
   return (
     <div>
-      <h2>Blogs</h2>
+      <h2>BlogList</h2>
       <p>{user.name} logged in <button onClick={handleLogout}>Logout</button></p>
       
+      <Notification message={message} error={error}/>
+
+      <h3>Add New Blog</h3>
       <form onSubmit={addBlog}>
         <div>
           <label htmlFor='Title'>Title: </label>
@@ -130,6 +150,7 @@ const App = () => {
         <button type="submit">Save</button>
       </form>  
 
+      <h3>Blogs</h3>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
