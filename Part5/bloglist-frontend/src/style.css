@@ -10,3 +10,27 @@
 .notification.error {
   color: red;
 }
+
+.blogInfo {
+  border: 1px solid;
+  border-color:dimgray;
+  padding: 0 0 0 10px;
+  margin-bottom: 10px;
+}
+
+.blogInfoHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btnShowMore {
+  margin: 10px;
+}
+
+.blogInfoFooter {
+  border: 1px solid;
+  border-color: dimgray;
+  padding: 0 0 0 10px;
+  margin: 0 5px 5px 0;
+}
