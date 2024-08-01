@@ -1,9 +1,17 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-const Blog = ({ blog}) => { 
+const Blog = ({ blog, increseLikes }) => { 
   const [visible, setVisible] = useState(false)  
+  const [likes, setLikes] = useState(blog.likes) //NUEVO
   
   const showWhenVisible = { display: visible ? '' : 'none' }
+  
+  const handleLike = () => {
+    const updatedLikes = likes + 1    
+    setLikes(updatedLikes)   
+    const updatedBlog = {...blog, likes: updatedLikes}    
+    increseLikes(updatedBlog)
+  }
   
   return (
     <div className='blogInfo'>
@@ -15,7 +23,7 @@ const Blog = ({ blog}) => {
       </div>      
       <div className='blogInfoBody' style={showWhenVisible}>
         <p>{blog.url}</p>
-        <p>{blog.likes} <button>like</button></p>
+        <p>{likes} <button onClick={handleLike}>like</button></p>
       </div>      
       <div className='blogInfoFooter' style={showWhenVisible}>
         {blog.user ? <p>save by {blog.user.username}</p> : <></>}

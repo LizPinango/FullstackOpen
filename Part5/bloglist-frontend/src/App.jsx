@@ -71,6 +71,21 @@ const App = () => {
         })
   }
     
+  const likeBlog = async (blogObject) => {
+    blogService
+      .like(blogObject.id, blogObject)
+        .then(returnedBlog => {             
+          const oldBlog = blogs.filter(b => b.id === returnedBlog.id)
+          const newBlog = {...oldBlog, likes: returnedBlog.likes}
+          setBlogs(blogs.map(b => b.id !== newBlog.id ? b : newBlog))
+        })
+        .catch(err => {
+          console.log(err);         
+          setError(true);
+          handleMessage(err.response.data.error)
+        })
+  }
+
   const handleMessage = (message) => {
     setMessage(message)
     setTimeout(() => {
@@ -118,7 +133,7 @@ const App = () => {
       
       <h3>Blogs</h3>      
       {blogs.map(blog =>        
-        <Blog key={blog.id} blog={blog}/>
+        <Blog key={blog.id} blog={blog} increseLikes={likeBlog}/>
       )}
     </div>
   )

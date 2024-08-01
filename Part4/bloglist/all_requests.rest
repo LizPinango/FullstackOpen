@@ -34,3 +34,15 @@ Authorization: Bearer
 ###
 DELETE http://localhost:3003/api/blogs/667ad13816647555be02529d
 Authorization: Bearer 
+
+###
+PUT  http://localhost:3003/api/blogs/66a168b110597fc2e2335c1e
+content-type: application/json
+
+{
+  "title":"work",
+  "author":"Ateez",
+  "url":"http://WORK.com",
+  "likes": 1,
+  "user":"6669f4cb875f020e77d76792"
+}
