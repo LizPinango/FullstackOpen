@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
-const Blog = ({ blog, increseLikes }) => { 
+const Blog = ({ blog, increseLikes, loggedUser, removeBlog }) => { 
   const [visible, setVisible] = useState(false)  
-  const [likes, setLikes] = useState(blog.likes) //NUEVO
+  const [likes, setLikes] = useState(blog.likes) 
   
   const showWhenVisible = { display: visible ? '' : 'none' }
   
@@ -11,6 +11,10 @@ const Blog = ({ blog, increseLikes }) => {
     setLikes(updatedLikes)   
     const updatedBlog = {...blog, likes: updatedLikes}    
     increseLikes(updatedBlog)
+  }
+
+  const handleRemove = () => {
+    removeBlog(blog.id, blog.title)
   }
   
   return (
@@ -27,6 +31,10 @@ const Blog = ({ blog, increseLikes }) => {
       </div>      
       <div className='blogInfoFooter' style={showWhenVisible}>
         {blog.user ? <p>save by {blog.user.username}</p> : <></>}
+        {blog.user.username === loggedUser.username ? 
+          <button className='btnRemove' onClick={handleRemove}>Remove</button>
+          : <></>
+        }
       </div>
     </div> 
   )   

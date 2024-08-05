@@ -5,9 +5,9 @@ POST http://localhost:3003/api/users
 content-type: application/json
 
 {
-  "username": "NewUser123",
-  "name": "Pedro Perez",
-  "password": "12345678"
+  "username": "SecondUser",
+  "name": "Maria Martinez",
+  "password": "87654321"
 }
 
 ###
@@ -15,8 +15,8 @@ POST http://localhost:3003/api/login
 content-type: application/json
 
 {
-  "username": "FirstUser",  
-  "password": "12345678"
+  "username": "SecondUser",  
+  "password": "87654321"
 }
 
 ###
@@ -25,10 +25,10 @@ content-type: application/json
 Authorization: Bearer 
 
 {
-  "title": "Blog6",
-  "author": "person2",
-  "url": "http://Blog6.com",
-  "likes": 8
+  "title": "Blog by SecondUser",
+  "author": "bb34",
+  "url": "http://Blog_by_SecondUser.com",
+  "likes": 10
 }
 
 ###

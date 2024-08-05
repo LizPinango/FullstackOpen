@@ -86,6 +86,23 @@ const App = () => {
         })
   }
 
+  const deleteBlog = (id, blogTitle) => {
+    if (window.confirm(`Do you want to delete the blog "${blogTitle}" ?`)){
+      blogService
+        .remove(id)
+          .then(res => {
+            console.log(`deleted blog with id ${id}`)   
+            console.log(res)       
+            setBlogs(blogs.filter(b => b.id !== id))
+            handleMessage(`the blog "${blogTitle}" was deleted`)
+          })
+          .catch(err => {
+            setError(true);
+            handleMessage(`the blog "${blogTitle}" could not be deleted`)
+          })
+    }
+  }
+
   const handleMessage = (message) => {
     setMessage(message)
     setTimeout(() => {
@@ -132,8 +149,8 @@ const App = () => {
       </Togglable>
       
       <h3>Blogs</h3>      
-      {blogs.map(blog =>        
-        <Blog key={blog.id} blog={blog} increseLikes={likeBlog}/>
+      {blogs.sort((a, b) => b.likes - a.likes).map(blog =>        
+        <Blog key={blog.id} blog={blog} increseLikes={likeBlog} loggedUser={user} removeBlog={deleteBlog}/>
       )}
     </div>
   )
