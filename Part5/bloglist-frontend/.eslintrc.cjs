@@ -16,6 +16,10 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
-    'react/prop-types': false
+    'react/prop-types': 'off',
+    'no-duplicate-imports': 'error',
+    'no-template-curly-in-string': 'error',    
+    'eqeqeq': 'error',    
+    'quotes': ['error', 'single'],
   },
 }

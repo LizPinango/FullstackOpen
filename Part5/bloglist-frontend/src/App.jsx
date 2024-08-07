@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from "react"
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
@@ -96,7 +96,7 @@ const App = () => {
             setBlogs(blogs.filter(b => b.id !== id))
             handleMessage(`the blog "${blogTitle}" was deleted`)
           })
-          .catch(err => {
+          .catch(() => {
             setError(true);
             handleMessage(`the blog "${blogTitle}" could not be deleted`)
           })
