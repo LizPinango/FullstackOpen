@@ -13,7 +13,7 @@ const BlogForm = ({ createBlog }) => {
       author: newAuthor,
       url: newUrl
     }
-    console.log(newBlog)
+    //console.log(newBlog)
 
     createBlog(newBlog)
 
@@ -38,15 +38,15 @@ const BlogForm = ({ createBlog }) => {
     <form onSubmit={addBlog}>
       <div>
         <label htmlFor='Title'>Title: </label>
-        <input id='Title' name='Title' value={newTitle} onChange={handleTitleChange} />
+        <input id='Title' name='Title' value={newTitle} onChange={handleTitleChange} placeholder='New Blog'/>
       </div>
       <div>
         <label>Author: </label>
-        <input id='Author' name='Author' value={newAuthor} onChange={handleAuthorChange} />
+        <input id='Author' name='Author' value={newAuthor} onChange={handleAuthorChange} placeholder='Jhon Doe'/>
       </div>
       <div>
         <label>Url: </label>
-        <input id='Url' name='Url' value={newUrl} onChange={handleUrlChange} />
+        <input id='Url' name='Url' value={newUrl} onChange={handleUrlChange} placeholder='https://www.webpage.com'/>
       </div>        
       <button type="submit">Save</button>
     </form> 

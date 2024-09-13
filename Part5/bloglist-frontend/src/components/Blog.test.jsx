@@ -9,8 +9,8 @@ describe('Testing Blog Component: ', () => {
     url: 'https://blog.com',
     likes: 15,
     user: {
-        username: 'newUser',
-        name: 'Luis Lopez',
+      username: 'newUser',
+      name: 'Luis Lopez',
     }
   }
 
@@ -21,14 +21,36 @@ describe('Testing Blog Component: ', () => {
  
   const mockIncreseLikes = vi.fn()
   const mockRemoveBlog = vi.fn()
+
+  let container
+
+  beforeEach(() => {
+    container = render(<Blog blog={blog} loggedUser={loggedUser} increseLikes={mockIncreseLikes} removeBlog={mockRemoveBlog} />).container
+  })
   
   test('renders title and author', () => {
-    const { container } = render(<Blog blog={blog} loggedUser={loggedUser} increseLikes={mockIncreseLikes} removeBlog={mockRemoveBlog} />)
-  
     const div = container.querySelector('.blogInfoHeader')
     expect(div).toHaveTextContent(
       'Component testing is done with react-testing-library by Liz P'
     )
+  })
+
+  test('URL and Likes are show when buttom is clicked', async () => {
+    const user = userEvent.setup()
+    const button = screen.getByText('Show More')
+    await user.click(button)
+
+    const div = container.querySelector('.blogInfoBody')
+    expect(div).not.toHaveStyle('display: none')
+  })
+
+  test('if the like button is clicked twice, the event handler is called twice', async () => {
+    const user = userEvent.setup()
+    const button = screen.getByText('like')
+    await user.click(button)
+    await user.click(button)
+
+    expect(mockIncreseLikes.mock.calls).toHaveLength(2)
   })
 })
 
