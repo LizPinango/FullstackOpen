@@ -23,7 +23,40 @@ const reducer = (state = initialState, action) => {
   console.log('state now: ', state)
   console.log('action', action)
 
-  return state
+  switch (action.type) {
+    case 'UPVOTE':{ //añadir un voto       
+      const id = action.payload.id 
+      const anecdoteToChange = state.find(a => a.id === id)
+      const changedAnecdote = { 
+        ...anecdoteToChange, 
+        votes: anecdoteToChange.votes+1
+      }
+      //console.log(changedAnecdote)
+      return state.map(a => a.id !== id ? a : changedAnecdote)
+    }
+    case 'ADD': 
+      return state.concat(action.payload)
+    default: return state
+  }
+}
+
+//ACCIONES
+export const upvote = (id) => {
+  return {
+    type: 'UPVOTE',
+    payload: { id }
+  }
+}
+
+export const add = (anecdote) => {
+  return {
+    type: 'ADD',
+    payload: {
+      content: anecdote,
+      id: getId(),
+      votes: 0
+    }
+  }
 }
 
 export default reducer
