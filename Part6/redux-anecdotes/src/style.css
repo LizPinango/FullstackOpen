@@ -1,0 +1,15 @@
+.anecdote-container{
+  border: 1px solid;
+  border-radius: 5px;
+  border-color:dimgray;
+  padding: 5px 0 5px 10px;
+  margin-bottom: 10px;
+}
+
+.anecdote-text{
+  margin-bottom: 5px;
+}
+
+.btn-voting{
+  margin: 0 0 0 5px;
+}

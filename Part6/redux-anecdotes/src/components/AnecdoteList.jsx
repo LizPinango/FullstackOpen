@@ -8,13 +8,15 @@ const AnecdoteList = () => {
   return (
     <div>          
       {anecdotes.sort((a, b) => b.votes - a.votes).map(anecdote =>
-        <div key={anecdote.id}>
-          <div>
+        <div key={anecdote.id} className="anecdote-container">
+          <div className="anecdote-text">
             {anecdote.content}
           </div>
           <div>
             has {anecdote.votes}
-            <button onClick={() =>  dispatch(upvote(anecdote.id))}>vote</button>
+            <button className="btn-voting" onClick={() =>  dispatch(upvote(anecdote.id))}>
+              vote
+            </button>
           </div>
         </div>
       )} 
