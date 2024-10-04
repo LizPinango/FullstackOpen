@@ -2,9 +2,15 @@ import { useSelector, useDispatch } from "react-redux"
 import { upvote } from "../reducers/anecdoteReducer"
 
 const AnecdoteList = () => {
-  const anecdotes = useSelector(state => state) //accedo a la info en la store 
-  const dispatch = useDispatch() // mando las acciones al reducer 
-
+  const dispatch = useDispatch() 
+  const anecdotes = useSelector(state => {
+    if( state.filter === ''){
+      return state.anecdote
+    }
+    const re = new RegExp(state.filter, 'i')
+    return state.anecdote.filter(a => a.content.match(re))
+  }) 
+  
   return (
     <div>          
       {anecdotes.sort((a, b) => b.votes - a.votes).map(anecdote =>
