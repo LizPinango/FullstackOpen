@@ -5,15 +5,15 @@ const AnecdoteList = () => {
   const dispatch = useDispatch() 
   const anecdotes = useSelector(state => {
     if( state.filter === ''){
-      return state.anecdote
+      return state.anecdotes
     }
     const re = new RegExp(state.filter, 'i')
-    return state.anecdote.filter(a => a.content.match(re))
+    return state.anecdotes.filter(a => a.content.match(re))
   }) 
-  
+    
   return (
     <div>          
-      {anecdotes.sort((a, b) => b.votes - a.votes).map(anecdote =>
+      {[...anecdotes].sort((a, b) => b.votes - a.votes).map(anecdote =>
         <div key={anecdote.id} className="anecdote-container">
           <div className="anecdote-text">
             {anecdote.content}
