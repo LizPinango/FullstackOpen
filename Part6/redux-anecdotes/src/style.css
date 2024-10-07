@@ -17,3 +17,12 @@
 .filter-container{
   margin-bottom: 10px;
 }
+
+.notification{
+  text-align: center;
+  border: 5px solid;
+  border-color: blue;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 0px 10px 10px 10px;  
+}
