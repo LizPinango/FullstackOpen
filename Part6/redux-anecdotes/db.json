@@ -38,7 +38,7 @@
     {
       "id": "8784",
       "content": "prueba nueva anecdota ",
-      "votes": 0
+      "votes": 2
     },
     {
       "id": "007f",
@@ -49,6 +49,11 @@
       "id": "8b4d",
       "content": "prueba ejercicio 6.17",
       "votes": 3
+    },
+    {
+      "id": "37a8",
+      "content": "prueba ejercicio 6.19",
+      "votes": 0
     }
   ]
 }
