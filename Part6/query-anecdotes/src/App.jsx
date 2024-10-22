@@ -20,8 +20,12 @@ const App = () => {
 
   const voteAnecdoteMutation = useMutation({
     mutationFn: upvote,
-    onSuccess: () => {
+    onSuccess: (anecdote) => {
       queryClient.invalidateQueries({ queryKey: ['anecdotes'] })
+      notiDispatch({ type: 'SET', payload: `voted for '${anecdote.content}'` })
+      setTimeout(() => {
+        notiDispatch({ type: 'RESET' })
+      }, 5000)
     }
   })
 
@@ -36,11 +40,7 @@ const App = () => {
   const anecdotes = result.data  
 
   const handleVote = (anecdote) => {
-    voteAnecdoteMutation.mutate({...anecdote, votes: anecdote.votes + 1})
-    notiDispatch({ type: 'SET', payload: `voted for '${anecdote.content}'` })
-    setTimeout(() => {
-      notiDispatch({ type: 'RESET' })
-    }, 5000)
+    voteAnecdoteMutation.mutate({...anecdote, votes: anecdote.votes + 1})    
   }
 
   return (
