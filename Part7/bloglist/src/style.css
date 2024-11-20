@@ -6,14 +6,14 @@
   padding: 10px;
   margin-bottom: 10px;
 }
-  
+
 .notification.error {
   color: red;
 }
 
 .blogInfo {
   border: 1px solid;
-  border-color:dimgray;
+  border-color: dimgray;
   padding: 0 0 0 10px;
   margin-bottom: 10px;
 }
@@ -38,9 +38,9 @@
 }
 
 .btnRemove {
-  margin-bottom: 10px;    
-  margin-right: 10px;  
-  align-self: flex-end;    
+  margin-bottom: 10px;
+  margin-right: 10px;
+  align-self: flex-end;
   width: 130px;
   height: 25px;
 }
