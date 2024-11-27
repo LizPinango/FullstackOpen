@@ -1,4 +1,9 @@
 import { useState, useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
+import {
+  setNotification,
+  setErrNotification,
+} from "./reducers/notificationReducer";
 import Blog from "./components/Blog";
 import Notification from "./components/Notification";
 import BlogForm from "./components/BlogForm";
@@ -11,10 +16,10 @@ const App = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
-  const [message, setMessage] = useState(null);
-  const [error, setError] = useState(false);
 
   const blogFormRef = useRef();
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -42,10 +47,9 @@ const App = () => {
       setUsername("");
       setPassword("");
       window.localStorage.setItem("loggedUser", JSON.stringify(user));
-      handleMessage(`${user.username} logged in`);
+      dispatch(setNotification(`${user.username} logged in`, 5000));
     } catch (err) {
-      setError(true);
-      handleMessage(`${err.response.data.error}`);
+      dispatch(setErrNotification(`${err.response.data.error}`, 7000));
     }
   };
 
@@ -61,14 +65,15 @@ const App = () => {
       .create(blogObject)
       .then((returnedBlog) => {
         setBlogs(blogs.concat(returnedBlog));
-        handleMessage(
-          `a new blog '${returnedBlog.title}' by ${returnedBlog.author} added`,
+        dispatch(
+          setNotification(
+            `a new blog '${returnedBlog.title}' by ${returnedBlog.author} added`,
+            5000,
+          ),
         );
       })
       .catch((err) => {
-        console.log(err);
-        setError(true);
-        handleMessage(err.response.data.error);
+        dispatch(setErrNotification(`${err.response.data.error}`, 7000));
       });
   };
 
@@ -81,9 +86,7 @@ const App = () => {
         setBlogs(blogs.map((b) => (b.id !== newBlog.id ? b : newBlog)));
       })
       .catch((err) => {
-        console.log(err);
-        setError(true);
-        handleMessage(err.response.data.error);
+        dispatch(setErrNotification(`${err.response.data.error}`, 7000));
       });
   };
 
@@ -92,31 +95,27 @@ const App = () => {
       blogService
         .remove(id)
         .then((res) => {
-          console.log(`deleted blog with id ${id}`);
-          console.log(res);
           setBlogs(blogs.filter((b) => b.id !== id));
-          handleMessage(`the blog "${blogTitle}" was deleted`);
+          dispatch(
+            setNotification(`the blog "${blogTitle}" was deleted`, 5000),
+          );
         })
         .catch(() => {
-          setError(true);
-          handleMessage(`the blog "${blogTitle}" could not be deleted`);
+          dispatch(
+            setErrNotification(
+              `the blog "${blogTitle}" could not be deleted`,
+              7000,
+            ),
+          );
         });
     }
-  };
-
-  const handleMessage = (message) => {
-    setMessage(message);
-    setTimeout(() => {
-      setMessage(null);
-      setError(false);
-    }, 7000);
   };
 
   if (user === null) {
     return (
       <div>
         <h2>Login</h2>
-        <Notification message={message} error={error} />
+        <Notification />
 
         <form onSubmit={handleLogin}>
           <div>
@@ -152,7 +151,7 @@ const App = () => {
         {user.name} logged in <button onClick={handleLogout}>Logout</button>
       </p>
 
-      <Notification message={message} error={error} />
+      <Notification />
 
       <h3>Add New Blog</h3>
       <Togglable buttonLabel="New Blog" ref={blogFormRef}>
