@@ -13,8 +13,7 @@ const BlogForm = ({ createBlog }) => {
       author: newAuthor,
       url: newUrl,
     };
-    //console.log(newBlog)
-
+    
     createBlog(newBlog);
 
     setNewTitle("");

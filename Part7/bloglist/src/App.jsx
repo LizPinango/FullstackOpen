@@ -4,7 +4,8 @@ import {
   setNotification,
   setErrNotification,
 } from "./reducers/notificationReducer";
-import Blog from "./components/Blog";
+import { initializeBlogs } from "./reducers/blogReducer";
+import BlogList from "./components/BlogList";
 import Notification from "./components/Notification";
 import BlogForm from "./components/BlogForm";
 import Togglable from "./components/Togglable";
@@ -21,8 +22,8 @@ const App = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs));
+  useEffect(() => {    
+    dispatch(initializeBlogs())
   }, []);
 
   useEffect(() => {
@@ -158,18 +159,12 @@ const App = () => {
         <BlogForm createBlog={addBlog} />
       </Togglable>
 
-      <h3>Blogs</h3>
-      {blogs
-        .sort((a, b) => b.likes - a.likes)
-        .map((blog) => (
-          <Blog
-            key={blog.id}
-            blog={blog}
-            increseLikes={likeBlog}
-            loggedUser={user}
-            removeBlog={deleteBlog}
-          />
-        ))}
+      <h3>Blogs</h3>      
+        <BlogList            
+          increseLikes={likeBlog}
+          loggedUser={user}
+          removeBlog={deleteBlog}
+        />        
     </div>
   );
 };
