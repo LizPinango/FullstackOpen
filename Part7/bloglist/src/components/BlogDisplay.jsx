@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from "react";
 
 const BlogDisplay = ({ blog, loggedUser }) => {
   const [visible, setVisible] = useState(false);
@@ -6,17 +6,17 @@ const BlogDisplay = ({ blog, loggedUser }) => {
   const showWhenVisible = { display: visible ? "" : "none" };
 
   const handleLike = () => {
-    console.log('like')
+    console.log("like");
     /*const updatedLikes = likes + 1;
     setLikes(updatedLikes);
     const updatedBlog = { ...blog, likes: updatedLikes };
     increseLikes(updatedBlog);*/
   };
-  
+
   const handleRemove = () => {
-    console.log('delete')    
+    console.log("delete");
   };
-  
+
   return (
     <div className="blogInfo">
       <div className="blogInfoHeader">
@@ -39,12 +39,12 @@ const BlogDisplay = ({ blog, loggedUser }) => {
           <button className="btnRemove" onClick={handleRemove}>
             Remove
           </button>
-          ) : (
-            <></>
-          )}
+        ) : (
+          <></>
+        )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default BlogDisplay
+export default BlogDisplay;

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
   setNotification,
@@ -8,7 +8,6 @@ import { initializeBlogs } from "./reducers/blogReducer";
 import BlogList from "./components/BlogList";
 import Notification from "./components/Notification";
 import BlogForm from "./components/BlogForm";
-import Togglable from "./components/Togglable";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 
@@ -18,12 +17,10 @@ const App = () => {
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
 
-  const blogFormRef = useRef();
-
   const dispatch = useDispatch();
 
-  useEffect(() => {    
-    dispatch(initializeBlogs())
+  useEffect(() => {
+    dispatch(initializeBlogs());
   }, []);
 
   useEffect(() => {
@@ -58,24 +55,6 @@ const App = () => {
     setUser(null);
     window.localStorage.removeItem("loggedUser");
     console.log("logged out");
-  };
-
-  const addBlog = async (blogObject) => {
-    blogFormRef.current.toggleVisibility();
-    blogService
-      .create(blogObject)
-      .then((returnedBlog) => {
-        setBlogs(blogs.concat(returnedBlog));
-        dispatch(
-          setNotification(
-            `a new blog '${returnedBlog.title}' by ${returnedBlog.author} added`,
-            5000,
-          ),
-        );
-      })
-      .catch((err) => {
-        dispatch(setErrNotification(`${err.response.data.error}`, 7000));
-      });
   };
 
   const likeBlog = async (blogObject) => {
@@ -155,16 +134,14 @@ const App = () => {
       <Notification />
 
       <h3>Add New Blog</h3>
-      <Togglable buttonLabel="New Blog" ref={blogFormRef}>
-        <BlogForm createBlog={addBlog} />
-      </Togglable>
+      <BlogForm />
 
-      <h3>Blogs</h3>      
-        <BlogList            
-          increseLikes={likeBlog}
-          loggedUser={user}
-          removeBlog={deleteBlog}
-        />        
+      <h3>Blogs</h3>
+      <BlogList
+        increseLikes={likeBlog}
+        loggedUser={user}
+        removeBlog={deleteBlog}
+      />
     </div>
   );
 };

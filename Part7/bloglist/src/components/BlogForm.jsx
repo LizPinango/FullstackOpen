@@ -1,72 +1,48 @@
-import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useRef } from "react";
+import { createBlog } from "../reducers/blogReducer";
+import Togglable from "./Togglable";
 
-const BlogForm = ({ createBlog }) => {
-  const [newTitle, setNewTitle] = useState("");
-  const [newAuthor, setNewAuthor] = useState("");
-  const [newUrl, setNewUrl] = useState("");
+const BlogForm = () => {
+  const dispatch = useDispatch();
 
-  const addBlog = (event) => {
+  const blogFormRef = useRef();
+
+  const addBlog = async (event) => {
+    blogFormRef.current.toggleVisibility();
     event.preventDefault();
 
     const newBlog = {
-      title: newTitle,
-      author: newAuthor,
-      url: newUrl,
+      title: event.target.Title.value,
+      author: event.target.Author.value,
+      url: event.target.Url.value,
     };
-    
-    createBlog(newBlog);
 
-    setNewTitle("");
-    setNewAuthor("");
-    setNewUrl("");
-  };
+    event.target.Title.value = "";
+    event.target.Author.value = "";
+    event.target.Url.value = "";
 
-  const handleTitleChange = (event) => {
-    setNewTitle(event.target.value);
-  };
-
-  const handleAuthorChange = (event) => {
-    setNewAuthor(event.target.value);
-  };
-
-  const handleUrlChange = (event) => {
-    setNewUrl(event.target.value);
+    dispatch(createBlog(newBlog));
   };
 
   return (
-    <form onSubmit={addBlog}>
-      <div>
-        <label htmlFor="Title">Title: </label>
-        <input
-          id="Title"
-          name="Title"
-          value={newTitle}
-          onChange={handleTitleChange}
-          placeholder="New Blog"
-        />
-      </div>
-      <div>
-        <label>Author: </label>
-        <input
-          id="Author"
-          name="Author"
-          value={newAuthor}
-          onChange={handleAuthorChange}
-          placeholder="Jhon Doe"
-        />
-      </div>
-      <div>
-        <label>Url: </label>
-        <input
-          id="Url"
-          name="Url"
-          value={newUrl}
-          onChange={handleUrlChange}
-          placeholder="https://www.webpage.com"
-        />
-      </div>
-      <button type="submit">Save</button>
-    </form>
+    <Togglable buttonLabel="New Blog" ref={blogFormRef}>
+      <form onSubmit={addBlog}>
+        <div>
+          <label htmlFor="Title">Title: </label>
+          <input id="Title" name="Title" placeholder="New Blog" />
+        </div>
+        <div>
+          <label htmlFor="Author">Author: </label>
+          <input id="Author" name="Author" placeholder="Jhon Doe" />
+        </div>
+        <div>
+          <label htmlFor="Url">Url: </label>
+          <input id="Url" name="Url" placeholder="https://www.webpage.com" />
+        </div>
+        <button type="submit">Save</button>
+      </form>
+    </Togglable>
   );
 };
 
