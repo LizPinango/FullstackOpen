@@ -1,11 +1,12 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import BlogDisplay from "./BlogDisplay";
 
-const BlogList = ({ increseLikes, loggedUser, removeBlog }) => {
+const BlogList = ({ loggedUser }) => {
   const blogs = useSelector((state) => state.blog);
 
   return (
     <>
+      <h3>Blogs</h3>
       {[...blogs]
         .sort((a, b) => b.likes - a.likes)
         .map((blog) => (

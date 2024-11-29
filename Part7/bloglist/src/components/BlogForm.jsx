@@ -26,23 +26,26 @@ const BlogForm = () => {
   };
 
   return (
-    <Togglable buttonLabel="New Blog" ref={blogFormRef}>
-      <form onSubmit={addBlog}>
-        <div>
-          <label htmlFor="Title">Title: </label>
-          <input id="Title" name="Title" placeholder="New Blog" />
-        </div>
-        <div>
-          <label htmlFor="Author">Author: </label>
-          <input id="Author" name="Author" placeholder="Jhon Doe" />
-        </div>
-        <div>
-          <label htmlFor="Url">Url: </label>
-          <input id="Url" name="Url" placeholder="https://www.webpage.com" />
-        </div>
-        <button type="submit">Save</button>
-      </form>
-    </Togglable>
+    <>
+      <h3>Add New Blog</h3>
+      <Togglable buttonLabel="New Blog" ref={blogFormRef}>
+        <form onSubmit={addBlog}>
+          <div>
+            <label htmlFor="Title">Title: </label>
+            <input id="Title" name="Title" placeholder="New Blog" />
+          </div>
+          <div>
+            <label htmlFor="Author">Author: </label>
+            <input id="Author" name="Author" placeholder="Jhon Doe" />
+          </div>
+          <div>
+            <label htmlFor="Url">Url: </label>
+            <input id="Url" name="Url" placeholder="https://www.webpage.com" />
+          </div>
+          <button type="submit">Save</button>
+        </form>
+      </Togglable>
+    </>
   );
 };
 

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { initializeBlogs } from "./reducers/blogReducer";
 import {
   setNotification,
   setErrNotification,
 } from "./reducers/notificationReducer";
-import { initializeBlogs } from "./reducers/blogReducer";
 import BlogList from "./components/BlogList";
 import Notification from "./components/Notification";
 import BlogForm from "./components/BlogForm";
@@ -12,7 +12,6 @@ import blogService from "./services/blogs";
 import loginService from "./services/login";
 
 const App = () => {
-  const [blogs, setBlogs] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
@@ -57,40 +56,6 @@ const App = () => {
     console.log("logged out");
   };
 
-  const likeBlog = async (blogObject) => {
-    blogService
-      .like(blogObject.id, blogObject)
-      .then((returnedBlog) => {
-        const oldBlog = blogs.filter((b) => b.id === returnedBlog.id);
-        const newBlog = { ...oldBlog, likes: returnedBlog.likes };
-        setBlogs(blogs.map((b) => (b.id !== newBlog.id ? b : newBlog)));
-      })
-      .catch((err) => {
-        dispatch(setErrNotification(`${err.response.data.error}`, 7000));
-      });
-  };
-
-  const deleteBlog = (id, blogTitle) => {
-    if (window.confirm(`Do you want to delete the blog "${blogTitle}" ?`)) {
-      blogService
-        .remove(id)
-        .then((res) => {
-          setBlogs(blogs.filter((b) => b.id !== id));
-          dispatch(
-            setNotification(`the blog "${blogTitle}" was deleted`, 5000),
-          );
-        })
-        .catch(() => {
-          dispatch(
-            setErrNotification(
-              `the blog "${blogTitle}" could not be deleted`,
-              7000,
-            ),
-          );
-        });
-    }
-  };
-
   if (user === null) {
     return (
       <div>
@@ -132,16 +97,8 @@ const App = () => {
       </p>
 
       <Notification />
-
-      <h3>Add New Blog</h3>
       <BlogForm />
-
-      <h3>Blogs</h3>
-      <BlogList
-        increseLikes={likeBlog}
-        loggedUser={user}
-        removeBlog={deleteBlog}
-      />
+      <BlogList loggedUser={user} />
     </div>
   );
 };
