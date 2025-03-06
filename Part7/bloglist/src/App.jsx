@@ -1,14 +1,19 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeBlogs } from "./reducers/blogReducer";
-import { initializeUser, login, logout } from "./reducers/userReducer";
-import BlogList from "./components/BlogList";
+import { initializeUser, login, logout } from "./reducers/sesionReducer";
+import {
+  BrowserRouter as Router,
+  Routes, Route, Link
+} from 'react-router-dom'
+
 import Notification from "./components/Notification";
-import BlogForm from "./components/BlogForm";
+import Home from "./components/Home";
+import Users from "./components/Users";
 
 const App = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const loggedUser = useSelector((state) => state.loggedUser);
 
   useEffect(() => {
     dispatch(initializeBlogs());
@@ -33,7 +38,7 @@ const App = () => {
     dispatch(logout())
   };
 
-  if (user === null) {
+  if (loggedUser === null) {
     return (
       <div>
         <h2>Login</h2>
@@ -55,16 +60,24 @@ const App = () => {
   }
 
   return (
-    <div>
+    <Router>
+      <nav>
+        <Link to="/">Home</Link>        
+        <Link to="/users">Users</Link>        
+      </nav>
+
       <h2>BlogList</h2>
       <p>
-        {user.name} logged in <button onClick={handleLogout}>Logout</button>
+        {loggedUser.name} logged in <button onClick={handleLogout}>Logout</button>
       </p>
-
       <Notification />
-      <BlogForm />
-      <BlogList loggedUser={user} />
-    </div>
+
+      <Routes>        
+        <Route path="/users" element={<Users />} />
+        <Route path="/" element={<Home loggedUser={loggedUser}/>} />
+      </Routes>
+     
+    </Router>   
   );
 };
 
