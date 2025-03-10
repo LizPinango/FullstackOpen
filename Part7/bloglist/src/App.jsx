@@ -9,6 +9,7 @@ import Notification from "./components/Notification";
 import Home from "./components/Home";
 import UsersList from "./components/UsersList";
 import User from "./components/User"
+import BlogDisplay from "./components/BlogDisplay";
 import { initializeBlogs } from "./reducers/blogReducer";
 import { initializeUser, login, logout } from "./reducers/sesionReducer";
 import { initializeUsers } from "./reducers/userReducer";
@@ -17,6 +18,7 @@ const App = () => {
   const dispatch = useDispatch();
   const loggedUser = useSelector((state) => state.loggedUser);  
   const users = useSelector((state) => state.user);
+  const blogs = useSelector((state) => state.blog);
 
   useEffect(() => {
     dispatch(initializeBlogs());
@@ -76,7 +78,8 @@ const App = () => {
       <Routes>        
         <Route path="/users" element={<UsersList users={users}/>} />
         <Route path="/users/:id" element={<User users={users}/>}/>
-        <Route path="/" element={<Home loggedUser={loggedUser}/>} />
+        <Route path="/" element={<Home blogs={blogs} loggedUser={loggedUser}/>} />
+        <Route path="/blogs/:id" element={<BlogDisplay blogs={blogs} loggedUser={loggedUser}/>} />
       </Routes>
      
     </Router>   

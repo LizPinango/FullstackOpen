@@ -1,31 +1,28 @@
 import { useDispatch } from "react-redux";
 import { likeOneBlog, deleteOneBlog } from "../reducers/blogReducer";
-import { useState } from "react";
+import { useParams} from 'react-router-dom'
 
-const BlogDisplay = ({ blog, loggedUser }) => {
+const BlogDisplay = ({ blogs, loggedUser }) => {
   const dispatch = useDispatch();
-
-  const [visible, setVisible] = useState(false);
-  const showWhenVisible = { display: visible ? "" : "none" };
+  const id = useParams().id  
+  const blog = blogs.find(u => u.id === id) 
 
   return (
     <div className="blogInfo">
       <div className="blogInfoHeader">
-        <p>
-          <b>{blog.title}</b> by {blog.author}
-        </p>
-        <button className="btnShowMore" onClick={() => setVisible(!visible)}>
-          {visible ? "Show Less" : "Show More"}
-        </button>
+        <h2>
+          <b>{blog.title}</b>
+        </h2>        
       </div>
-      <div className="blogInfoBody" style={showWhenVisible}>
+      <div className="blogInfoBody">
+        <p>Author: {blog.author}</p>
         <p>{blog.url}</p>
         <p>
           {blog.likes}{" "}
           <button onClick={() => dispatch(likeOneBlog(blog))}>like</button>
         </p>
       </div>
-      <div className="blogInfoFooter" style={showWhenVisible}>
+      <div className="blogInfoFooter">
         {blog.user ? <p>save by {blog.user.username}</p> : <></>}
         {blog.user.username === loggedUser.username ? (
           <button

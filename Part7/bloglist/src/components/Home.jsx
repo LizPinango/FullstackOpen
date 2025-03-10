@@ -1,11 +1,11 @@
 import BlogList from "../components/BlogList";
 import BlogForm from "../components/BlogForm";
 
-const Home = ({ loggedUser }) => {
+const Home = ({blogs, loggedUser }) => {
   return (
     <div>
       <BlogForm />
-      <BlogList loggedUser={loggedUser} />
+      <BlogList blogs={blogs} loggedUser={loggedUser} />
     </div>
   )
 }

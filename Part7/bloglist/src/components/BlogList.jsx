@@ -1,18 +1,21 @@
-import { useSelector } from "react-redux";
-import BlogDisplay from "./BlogDisplay";
+import { Link } from 'react-router-dom'
 
-const BlogList = ({ loggedUser }) => {
-  const blogs = useSelector((state) => state.blog);
-
+const BlogList = ({blogs}) => {
   return (
-    <>
+    <div>
       <h3>Blogs</h3>
-      {[...blogs]
-        .sort((a, b) => b.likes - a.likes)
-        .map((blog) => (
-          <BlogDisplay key={blog.id} blog={blog} loggedUser={loggedUser} />
-        ))}
-    </>
+      <ul>
+        {[...blogs]
+          .sort((a, b) => b.likes - a.likes)
+          .map((blog) => (
+            <li>
+              <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>  
+            </li>
+          ))
+        }
+      </ul>
+      
+    </div>
   );
 };
 
