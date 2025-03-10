@@ -1,7 +1,5 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { initializeBlogs } from "./reducers/blogReducer";
-import { initializeUser, login, logout } from "./reducers/sesionReducer";
 import {
   BrowserRouter as Router,
   Routes, Route, Link
@@ -9,20 +7,23 @@ import {
 
 import Notification from "./components/Notification";
 import Home from "./components/Home";
-import Users from "./components/Users";
+import UsersList from "./components/UsersList";
+import User from "./components/User"
+import { initializeBlogs } from "./reducers/blogReducer";
+import { initializeUser, login, logout } from "./reducers/sesionReducer";
+import { initializeUsers } from "./reducers/userReducer";
 
 const App = () => {
   const dispatch = useDispatch();
-  const loggedUser = useSelector((state) => state.loggedUser);
+  const loggedUser = useSelector((state) => state.loggedUser);  
+  const users = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(initializeBlogs());
-  }, []);
-
-  useEffect(() => {
+    dispatch(initializeUsers());
     dispatch(initializeUser())
   }, []);
-
+ 
   const handleLogin = async (event) => {
     event.preventDefault();
 
@@ -73,7 +74,8 @@ const App = () => {
       <Notification />
 
       <Routes>        
-        <Route path="/users" element={<Users />} />
+        <Route path="/users" element={<UsersList users={users}/>} />
+        <Route path="/users/:id" element={<User users={users}/>}/>
         <Route path="/" element={<Home loggedUser={loggedUser}/>} />
       </Routes>
      
