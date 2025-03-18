@@ -46,3 +46,11 @@ content-type: application/json
   "likes": 1,
   "user":"6669f4cb875f020e77d76792"
 }
+
+###
+POST http://localhost:3003/api/blogs/6679d8364ba446764f50a03f/comments
+content-type: application/json
+
+{
+  "comment": "Money in mi Pocket"
+}

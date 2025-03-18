@@ -18,7 +18,8 @@ blogsRouter.post('/', middleware.userExtractor, async (request, response, next) 
     author: body.author, 
     url: body.url,
     likes: body.likes || 0,
-    user: user.id
+    user: user.id,
+    comments: body.comments || 0
   })
 
   const savedBlog = await blog.save();
@@ -51,7 +52,8 @@ blogsRouter.put('/:id', async (request, response, next) => {
     author: body.name, 
     url: body.url,
     likes: body.likes,
-    user: body.user.id //Nuevo
+    user: body.user.id, 
+    comments: body.comments 
   }
 
   const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, {new: true})
@@ -61,6 +63,22 @@ blogsRouter.put('/:id', async (request, response, next) => {
   }else{
     response.status(200).json(updatedBlog) 
   }    
+})
+/**
+ * ADD A COMMENT TO A BLOG
+ */
+blogsRouter.post('/:id/comments', async (request, response, next) => {
+  const body = request.body  
+  
+  const blog = await Blog.findById(request.params.id) 
+  blog.comments = blog.comments.concat(body.comment)  
+  const updatedBlog  = await Blog.findByIdAndUpdate(request.params.id, blog, {new: true})
+    
+  if(!updatedBlog){
+    response.status(404).send({ error: 'The Blog has been eliminated' })
+  }else{
+    response.status(201).json(updatedBlog) 
+  }      
 })
 
 module.exports = blogsRouter;
