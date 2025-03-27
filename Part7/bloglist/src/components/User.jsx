@@ -9,14 +9,14 @@ const User = ({users}) => {
   }
 
   return(
-    <div>
-      <p>{user.name}</p>
+    <section id='user-section'>
+      <h2>{user.name}</h2>
       <ul>
         {user.blogs.map(blog => (
           <li key={blog.id}>{blog.title}</li>
         ))}
       </ul>      
-    </div>
+    </section>
   )
 }
 

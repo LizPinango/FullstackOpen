@@ -22,46 +22,49 @@ const BlogDisplay = ({ blogs, loggedUser }) => {
   }
 
   return (
-    <div className="blogInfo">
-      <div className="blogInfoHeader">
+    <section id="blogInfo">
+      <div id="blog-info-header">
         <h2>
-          <b>{blog.title}</b>
+          {blog.title}
         </h2>        
       </div>
-      <div className="blogInfoBody">
+      <div id="blog-info-body">
         <p>Author: {blog.author}</p>
-        <p>{blog.url}</p>
-        <p>
-          {blog.likes}{" "}
-          <button onClick={() => dispatch(likeOneBlog(blog))}>like</button>
-        </p>
-
+        <p>{blog.url}</p>  
         <ul>
           {blog.comments.map((comment, i) => (
             <li key={i}>{comment}</li>
           ))}
-        </ul>  
-        
+        </ul>          
         <form onSubmit={addComment}>
           <label htmlFor="Comment">Leave a Comment!</label>
+          <br></br>
           <input id="Comment" name="Comment" />
-          <button type="submit">submit</button>
+          <button id="btn-comment" type="submit">submit</button>
         </form>
       </div>
-      <div className="blogInfoFooter">
+      <div id="blog-info-footer">
         {blog.user ? <p>save by {blog.user.username}</p> : <></>}
-        {blog.user.username === loggedUser.username ? (
-          <button
-            className="btnRemove"
-            onClick={() => dispatch(deleteOneBlog(blog.id, blog.title))}
-          >
-            Remove
-          </button>
-        ) : (
-          <></>
-        )}
+        <div id='footer-buttons'>
+          <p>
+            {blog.likes}{" "}
+            <button id="btn-like" onClick={() => dispatch(likeOneBlog(blog))}>
+              like
+            </button>
+          </p>
+          {blog.user.username === loggedUser.username ? (
+            <button
+              id="btn-remove"
+              onClick={() => dispatch(deleteOneBlog(blog.id, blog.title))}
+            >
+              Remove
+            </button>
+          ) : (
+            <></>
+          )}
+        </div>        
       </div>
-    </div>
+    </section>
   );
 };
 

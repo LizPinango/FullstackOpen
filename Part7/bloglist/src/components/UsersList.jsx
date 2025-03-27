@@ -2,13 +2,13 @@ import { Link } from 'react-router-dom'
 
 const UsersList = ({users}) => {
   return (
-    <div>
-      <h3>List of Users</h3>      
-      <table>
+    <section id='users-list-section'>
+      <h2>List of Users</h2>      
+      <table id='users-table'>
         <tbody>
           <tr>
-            <th>User</th>
-            <th>Blogs</th>
+            <th><h3>User</h3></th>
+            <th><h3>Blogs</h3></th>
           </tr>
           {users.map(user => (
             <tr key={user.id}>              
@@ -20,7 +20,7 @@ const UsersList = ({users}) => {
           ))}  
         </tbody>                  
       </table> 
-    </div>
+    </section>
   )
 }
 

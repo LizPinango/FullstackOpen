@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom'
 
 const BlogList = ({blogs}) => {
   return (
-    <div>
-      <h3>Blogs</h3>
+    <section id='blog-list-section'>
+      <h2>Blogs</h2>
       <ul>
         {[...blogs]
           .sort((a, b) => b.likes - a.likes)
@@ -13,9 +13,8 @@ const BlogList = ({blogs}) => {
             </li>
           ))
         }
-      </ul>
-      
-    </div>
+      </ul>      
+    </section>
   );
 };
 

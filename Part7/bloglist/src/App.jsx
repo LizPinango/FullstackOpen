@@ -43,7 +43,7 @@ const App = () => {
 
   if (loggedUser === null) {
     return (
-      <div>
+      <section id="login-section">
         <h2>Login</h2>
         <Notification />
 
@@ -58,30 +58,35 @@ const App = () => {
           </div>
           <button type="submit">Login</button>
         </form>
-      </div>
+      </section>
     );
   }
 
   return (
     <Router>
       <nav>
-        <Link to="/">Home</Link>        
-        <Link to="/users">Users</Link>        
+        <div className="nav-element">
+          <Link to="/" className='nav-link'>Home</Link>        
+          <Link to="/users" className='nav-link'>Users</Link>   
+        </div>
+        <div className="nav-element"> 
+          <p>{loggedUser.name}</p>
+          <button onClick={handleLogout}>Logout</button>
+        </div>             
       </nav>
+      <div className="header">
+        <h1>BlogList</h1>
+      </div>
+      <main>             
+        <Notification />
 
-      <h2>BlogList</h2>
-      <p>
-        {loggedUser.name} logged in <button onClick={handleLogout}>Logout</button>
-      </p>
-      <Notification />
-
-      <Routes>        
-        <Route path="/users" element={<UsersList users={users}/>} />
-        <Route path="/users/:id" element={<User users={users}/>}/>
-        <Route path="/" element={<Home blogs={blogs} loggedUser={loggedUser}/>} />
-        <Route path="/blogs/:id" element={<BlogDisplay blogs={blogs} loggedUser={loggedUser}/>} />
-      </Routes>
-     
+        <Routes>        
+          <Route path="/users" element={<UsersList users={users}/>} />
+          <Route path="/users/:id" element={<User users={users}/>}/>
+          <Route path="/" element={<Home blogs={blogs} loggedUser={loggedUser}/>} />
+          <Route path="/blogs/:id" element={<BlogDisplay blogs={blogs} loggedUser={loggedUser}/>} />
+        </Routes>
+      </main>
     </Router>   
   );
 };

@@ -1,3 +1,131 @@
+body {
+  background-color: #f4fdfd;
+  margin: 0;
+  padding: 0;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  background-color: #EE6C4D;  
+}
+
+.nav-element {
+  overflow: hidden;
+  display: flex;
+  align-items: center;  
+}
+
+.nav-element p {
+  margin: 0 10px;
+  color: #7f0000;
+  font-weight: bold;  
+}
+
+.nav-element button {
+  margin-right: 10px;
+  background-color: #F7D1B3;
+  color: #7f0000; 
+  border: none;
+  height: 2rem;
+  width: 4rem;
+  border-radius: 0.30rem;
+}
+
+.nav-element button:hover {
+  background-color: #c1caca;
+}
+
+.nav-link {  
+  padding: 1rem;
+  text-decoration: none;
+  color: #7f0000;
+  font-weight: bold;
+  font-size: large;
+}
+
+.nav-link:hover {
+  background-color: #7f0000;
+  color: #EE6C4D;
+}
+
+.header {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;  
+}
+
+section {
+  margin: 1rem;
+}
+
+#add-blog-section, #users-list-section {
+  background-color: #F7D1B3;
+  border-radius: 0.5rem;  
+  font-weight: bold;    
+  padding: 0.5rem;  
+}
+
+#add-blog-section h2, #users-list-section h2 {
+  color: #7f0000;
+  margin: 0.25rem;
+}
+
+#add-blog-section input {
+  width: 100%;
+  height: 1.5rem;
+  border-radius: 0.20rem;
+  border-color: #333333;
+  background-color: #f4f1f1;
+}
+
+#add-blog-section button {
+  height: 2rem;
+  width: 8rem;
+  margin: 0.25rem;
+  background-color: #F7D1B3;
+  color: #7f0000;  
+  border-color: #7f0000;
+  border-radius: 0.5rem;
+}
+
+#hidden-form-container {
+  display: flex;
+  flex-flow: column;
+}
+
+#btn-cancel {
+  align-self: center;
+}
+
+form div {
+  margin: 0.5rem;
+}
+
+#blog-list-section ul {
+  background-color: #eaf3f3;
+  margin: 1rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 1.25rem;   
+  list-style-type: none;    
+}
+
+#users-table {
+  width: 100%;  
+  text-align: left;
+}
+
+#user-section ul {
+  background-color: #c1caca;  
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+}
+
 .notification {
   color: green;
   font-size: 20px;
@@ -11,36 +139,91 @@
   color: red;
 }
 
-.blogInfo {
+#blogInfo {
+  padding: 1rem;
+  background-color: #F7D1B3;
+  border: 1px solid;    
+  border-color: #333;
+  border-radius: 0.5rem;  
+}
+
+#blogInfo button {
+  height: 1.5rem;
+  background-color: #EE6C4D;
+  border-radius: 0.5rem; 
+  border-color: #7f0000;
+  color: #7f0000;
+  font-weight: bold;
+}
+
+#blogInfo button:hover {
+  background-color: #c1caca;
+  border-color: #333333;
+  color: #333333;
+}
+
+#blog-info-header {
+  color: #7f0000;  
+  text-align: center;
+}
+
+#blog-info-body label {  
+  font-weight: bold;
+  font-size: large;
+}
+
+#blog-info-body input {
+  width: 75%;
+  height: 1.5rem;
+  border-radius: 0.20rem;
+  border-color: #333333;
+  background-color: #f4f1f1;
+}
+
+#blog-info-footer {
   border: 1px solid;
   border-color: dimgray;
   padding: 0 0 0 10px;
-  margin-bottom: 10px;
-}
-
-.blogInfoHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.btnShowMore {
-  margin: 10px;
-}
-
-.blogInfoFooter {
-  border: 1px solid;
-  border-color: dimgray;
-  padding: 0 0 0 10px;
-  margin: 0 5px 5px 0;
+  margin: 0.5rem;
   display: flex;
   flex-direction: column;
 }
 
-.btnRemove {
-  margin-bottom: 10px;
-  margin-right: 10px;
+#footer-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+#btn-like {
+  width: 3rem;  
+}
+
+#btn-comment{
+  width: 4rem;  
+  margin: 0 0.5rem;
+}
+
+#btn-remove {
   align-self: flex-end;
-  width: 130px;
-  height: 25px;
+  width: 6rem;  
+  margin: 0 1rem 1rem 0;
+}
+
+#login-section input {
+  height: 1.5rem;
+  border-radius: 0.20rem;
+  border-color: #333333;
+  background-color: #f4f1f1;
+}
+
+#login-section button {
+  width: 5rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  border-color: #333;
+  background: #c1caca;
+}
+
+#login-section button:hover {
+  background-color: #F7D1B3;
 }

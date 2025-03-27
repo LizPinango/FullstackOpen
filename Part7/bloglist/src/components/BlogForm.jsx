@@ -26,8 +26,8 @@ const BlogForm = () => {
   };
 
   return (
-    <>
-      <h3>Add New Blog</h3>
+    <section id="add-blog-section"> 
+      <h2>Add New Blog</h2>
       <Togglable buttonLabel="New Blog" ref={blogFormRef}>
         <form onSubmit={addBlog}>
           <div>
@@ -45,7 +45,7 @@ const BlogForm = () => {
           <button type="submit">Save</button>
         </form>
       </Togglable>
-    </>
+    </section>    
   );
 };
 

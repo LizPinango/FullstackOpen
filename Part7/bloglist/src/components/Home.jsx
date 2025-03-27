@@ -3,10 +3,10 @@ import BlogForm from "../components/BlogForm";
 
 const Home = ({blogs, loggedUser }) => {
   return (
-    <div>
+    <>
       <BlogForm />
       <BlogList blogs={blogs} loggedUser={loggedUser} />
-    </div>
+    </>
   )
 }
 
